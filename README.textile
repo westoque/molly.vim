@@ -8,4 +8,4 @@ p. The only dependency `molly` needs is the unix `find` command.
 
 h2. Getting Started
 
-p. By default it uses `<Leader>-x` but you can change it to whatever you want.
+p. By default it uses `Leader Key + x` but you can change it to whatever you want.
