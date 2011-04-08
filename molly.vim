@@ -18,6 +18,7 @@ function! s:MollyController()
   execute "sp molly"
   call BindKeys()
   call SetLocals()
+  call WriteToBuffer(s:filelist)
 endfunction
 
 function RefreshFileList()
@@ -142,9 +143,13 @@ endfunction
 function ExecuteQuery()
   let listcopy = copy(s:filelist)
   let newlist = filter(listcopy, "v:val =~ \('" . s:query . "'\)")
-  call ClearBuffer()
-  call setline(".", newlist)
+  call WriteToBuffer(newlist)
   unlet newlist
   unlet listcopy
   echo ">> " . s:query
+endfunction
+
+function WriteToBuffer(files)
+  call ClearBuffer()
+  call setline(".", a:files)
 endfunction
