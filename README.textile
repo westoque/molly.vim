@@ -11,6 +11,7 @@ h2. Getting Started
 p. By default it uses `Leader Key + x` but you can change it to whatever you want.
 
 p. Currently is uses the vim default regex to parse the results, an example query would be: "users.*_test"
+
 h2. Mappings
 
 * Leader + x  -  open molly
