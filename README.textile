@@ -9,3 +9,11 @@ p. The only dependency `molly` needs is the unix `find` command.
 h2. Getting Started
 
 p. By default it uses `Leader Key + x` but you can change it to whatever you want.
+
+p. Currently is uses the vim default regex to parse the results, an example query would be: "users.*_test"
+h2. Mappings
+
+* Leader + x  -  open molly
+* Enter       -  go to file
+* Ctrl + v    -  open in a vertical split window
+* Ctrl + s    -  open in a split window
