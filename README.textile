@@ -4,7 +4,7 @@ p. ZOMG! Very fast and sexy textmate-like command-t plugin. It also works for re
 
 h2. Dependencies
 
-p. The only dependency `molly` needs is the unix `find` command.
+p. The only hard dependency `molly` needs is the unix `find` command.
 
 h2. Getting Started
 
@@ -18,3 +18,7 @@ h2. Mappings
 * Enter       -  go to file
 * Ctrl + v    -  open in a vertical split window
 * Ctrl + s    -  open in a split window
+* Up          -  go up
+* Ctrl + k    -  go up
+* Down        -  go down
+* Ctrl + j    -  go down
