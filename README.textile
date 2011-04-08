@@ -1,0 +1,10 @@
+h1. molly.vim
+h2. ZOMG! Very Fast/Sexy textmate-like command-t plugin
+
+h2. Dependencies
+
+p. The only dependency `molly` needs is the unix `find` command.
+
+h2. Getting Started
+
+p. By default it uses <leader>-x but you can change it to whatever you want.
