@@ -1,6 +1,6 @@
 h1. molly.vim
 
-p. ZOMG! Very fast and sexy textmate-like command-t plugin. It also works for regular vim. By default it caches the filelist, so if you add a new file you have to call the `RefreshFileList` function.
+p. ZOMG! Very fast and sexy textmate-like command-t plugin. It also works for regular vim.
 
 h2. Dependencies
 
