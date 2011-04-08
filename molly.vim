@@ -12,17 +12,13 @@ command -nargs=? -complete=dir Molly call <SID>MollyController()
 silent! nmap <unique> <silent> <Leader>x :Molly<CR>
 
 let s:query = ""
-let s:filelist = split(system('find . ! -regex ".*/\..*" -type f -print'), "\n")
 
 function! s:MollyController()
   execute "sp molly"
   call BindKeys()
   call SetLocals()
-  call WriteToBuffer(s:filelist)
-endfunction
-
-function RefreshFileList()
   let s:filelist = split(system('find . ! -regex ".*/\..*" -type f -print'), "\n")
+  call WriteToBuffer(s:filelist)
 endfunction
 
 function BindKeys()
