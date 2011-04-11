@@ -23,7 +23,7 @@ endfunction
 
 function BindKeys()
   let asciilist = range(97,122)
-  let asciilist = extend(asciilist, range(32,47))
+  let asciilist = extend(asciilist, range(32,46))
   let asciilist = extend(asciilist, range(58,90))
   let asciilist = extend(asciilist, [91,92,93,95,96,123,125,126])
 
@@ -50,7 +50,8 @@ function BindKeys()
     \  '<C-h>'   : 'CursorLeft',
     \  '<Left>'  : 'CursorLeft',
     \  '<C-l>'   : 'CursorRight',
-    \  '<Right>' : 'CursorRight'
+    \  '<Right>' : 'CursorRight',
+    \  '/'       : 'Slash'
   \}
 
   for n in asciilist
@@ -65,6 +66,10 @@ endfunction
 function HandleKey(key)
   let s:query = s:query . a:key
   call ExecuteQuery()
+endfunction
+
+function HandleKeySlash()
+  call HandleKey("\.*\/")
 endfunction
 
 function HandleKeySelectNext()
