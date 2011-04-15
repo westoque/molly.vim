@@ -22,3 +22,8 @@ h2. Mappings
 * Ctrl + k    -  go up
 * Down        -  go down
 * Ctrl + j    -  go down
+
+h2. TODOs
+
+* Better regex parser
+* Vim documentation/help
