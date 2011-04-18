@@ -137,11 +137,31 @@ function SetLocals()
 endfunction
 
 function ExecuteQuery()
-  let listcopy = copy(s:filelist)
-  let newlist = filter(listcopy, "v:val =~ \('" . s:query . "'\)")
+  let newlist = []
+
+  let querycharlist = split(s:query, '\zs')
+  let querycharlen = len(querycharlist)
+
+  let initialquery = join(querycharlist, '\a*_')
+  let firstquery = '/' . initialquery
+  let secondquery = initialquery
+
+  for n in s:filelist
+    let filesplit = split(n, '/')
+    let filename = '/' . get(filesplit, len(filesplit) - 1)
+
+    if filename =~ firstquery
+      call insert(newlist, n, 0)
+    elseif filename =~ secondquery
+      call insert(newlist, n, 0)
+    elseif n =~ s:query
+      call add(newlist, n)
+    endif
+  endfor
+
   call WriteToBuffer(newlist)
   unlet newlist
-  unlet listcopy
+  unlet querycharlist
   echo ">> " . s:query
 endfunction
 
