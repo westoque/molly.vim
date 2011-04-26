@@ -17,7 +17,7 @@ function! s:MollyController()
   execute "sp molly"
   call BindKeys()
   call SetLocals()
-  let s:filelist = split(system('find . ! -regex ".*/\..*" -type f -print'), "\n")
+  let s:filelist = split(glob('`find . ! -regex ".*/\..*" -type f -print`'), "\n")
   call WriteToBuffer(s:filelist)
 endfunction
 
