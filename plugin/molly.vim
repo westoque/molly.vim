@@ -2,23 +2,28 @@
 " File:        molly.vim
 " Description: Speed is key!
 " Maintainer:  William Estoque <william.estoque at gmail dot com>
-" Last Change: 23 March, 2010
 " License:     MIT
 "
 " ============================================================================
-let s:Molly_version = '0.0.2'
+let s:Molly_version = '0.0.3'
 
 command -nargs=? -complete=dir Molly call <SID>MollyController()
 silent! nmap <unique> <silent> <Leader>x :Molly<CR>
 
 let s:query = ""
+let s:bufferOpen = 0
 
 function! s:MollyController()
-  execute "sp molly"
-  call BindKeys()
-  call SetLocals()
-  let s:filelist = split(globpath(".", "**"), "\n")
-  call WriteToBuffer(s:filelist)
+  if s:bufferOpen
+    call ShowBuffer()
+  else
+    let s:bufferOpen = 1
+    execute "sp molly"
+    call BindKeys()
+    call SetLocals()
+    let s:filelist = split(globpath(".", "**"), "\n")
+    call WriteToBuffer(s:filelist)
+  endif
 endfunction
 
 function BindKeys()
@@ -90,20 +95,20 @@ endfunction
 
 function HandleKeyCancel()
   let s:query = ""
-  execute "q!"
+  call HideBuffer()
 endfunction
 
 function HandleKeyAcceptSelection()
   let filename = getline(".")
-  execute "q!"
-  execute "e " . filename
+  call HideBuffer()
+  execute ":e " . filename
   unlet filename
   let s:query = ""
 endfunction
 
 function HandleKeyAcceptSelectionVSplit()
   let filename = getline(".")
-  execute "q!"
+  call HideBuffer()
   execute "vs " . filename
   unlet filename
   let s:query = ""
@@ -111,7 +116,7 @@ endfunction
 
 function HandleKeyAcceptSelectionSplit()
   let filename = getline(".")
-  execute "q!"
+  call HideBuffer()
   execute "sp " . filename
   unlet filename
   let s:query = ""
@@ -121,9 +126,17 @@ function ClearBuffer()
   execute ":1,$d"
 endfunction
 
+function HideBuffer()
+  execute ":hid"
+endfunction
+
+function ShowBuffer()
+  execute ":sb molly"
+endfunction
+
 function SetLocals()
-  setlocal bufhidden=wipe
-  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal buftype=nowrite
   setlocal noswapfile
   setlocal nowrap
   setlocal nonumber
@@ -139,9 +152,32 @@ endfunction
 function ExecuteQuery()
   let listcopy = copy(s:filelist)
   let newlist = filter(listcopy, "v:val =~ \('" . s:query . "'\)")
+  let newlist = []
+
+  let querycharlist = split(s:query, '\zs')
+  let querycharlen = len(querycharlist)
+
+  let initialquery = join(querycharlist, '\a*_')
+  let firstquery = '/' . initialquery
+  let secondquery = initialquery
+
+  for n in s:filelist
+    let filesplit = split(n, '/')
+    let filename = '/' . get(filesplit, len(filesplit) - 1)
+
+    if filename =~ firstquery
+      call insert(newlist, n, 0)
+    elseif filename =~ secondquery
+      call insert(newlist, n, 0)
+    elseif n =~ s:query
+      call add(newlist, n)
+    endif
+  endfor
+
   call WriteToBuffer(newlist)
   unlet newlist
   unlet listcopy
+  unlet querycharlist
   echo ">> " . s:query
 endfunction
 
