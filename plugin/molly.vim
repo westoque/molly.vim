@@ -17,7 +17,7 @@ function! s:MollyController()
   execute "sp molly"
   call BindKeys()
   call SetLocals()
-  let s:filelist = split(system('find . ! -regex ".*/\..*" -type f -print'), "\n")
+  let s:filelist = split(globpath(".", "**"), "\n")
   call WriteToBuffer(s:filelist)
 endfunction
 
@@ -61,7 +61,7 @@ function BindKeys()
     execute "noremap <buffer> <silent>" . key  . " :call HandleKey" . specialChars[key] . "()<CR>"
   endfor
 endfunction
-
+ 
 function HandleKey(key)
   let s:query = s:query . a:key
   call ExecuteQuery()
