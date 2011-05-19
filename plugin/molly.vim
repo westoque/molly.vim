@@ -122,6 +122,15 @@ function HandleKeyAcceptSelectionSplit()
   let s:query = ""
 endfunction
 
+function HandleKeyAcceptSelectionTab()
+  let filename = getline(".")
+  call HideBuffer()
+  execute "tabnew"
+  execute "e " . filename
+  unlet filename
+  let s:query = ""
+endfunction
+
 function ClearBuffer()
   execute ":1,$d"
 endfunction
